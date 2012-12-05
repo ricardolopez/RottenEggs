@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">RottenEggs</string>
+    <string name="hello_world">RottenEggs!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_rotten_eggs">RottenEggs</string>
+
+</resources>
