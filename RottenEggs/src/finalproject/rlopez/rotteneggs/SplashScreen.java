@@ -20,8 +20,8 @@ public class SplashScreen extends Screen {
 		Assets.sp = g.newPixmap("sp.png", PixmapFormat.RGB565);
 		Assets.gs = g.newPixmap("gs.png", PixmapFormat.RGB565);
 		Assets.cloud1 = g.newPixmap("cloud1.png", PixmapFormat.ARGB4444);
-		Assets.cloud1 = g.newPixmap("cloud2.png", PixmapFormat.ARGB4444);
-		Assets.cloud1 = g.newPixmap("cloud3.png", PixmapFormat.ARGB4444);
+		Assets.cloud2 = g.newPixmap("cloud2.png", PixmapFormat.ARGB4444);
+		Assets.cloud3 = g.newPixmap("cloud3.png", PixmapFormat.ARGB4444);
 		Assets.basket = g.newPixmap("basket.png", PixmapFormat.ARGB4444);
 		Assets.blue_egg = g.newPixmap("blue_egg.png", PixmapFormat.ARGB4444);
 		Assets.blue_splat = g.newPixmap("blue_splat.png", PixmapFormat.ARGB4444);

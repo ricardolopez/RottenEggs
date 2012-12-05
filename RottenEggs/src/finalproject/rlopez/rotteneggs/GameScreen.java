@@ -63,6 +63,7 @@ public class GameScreen extends Screen {
 		world.checkSplats();
 		world.updateBasket(basket_x);
 		world.updateEggs(time);
+		world.updateClouds(time);
 	}
 	
 	@Override

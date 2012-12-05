@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.util.Log;
+
 public class World {
 
 	public static int SPLAT_OFFSET = 20;
@@ -14,6 +16,7 @@ public class World {
 	public Basket basket;
 	public List<Egg> eggs;
 	public List<Splat> splats;
+	public List<Cloud> clouds;
 	public int x_coord, y_coord, egg_type, egg_index;
 	public float timePassed;
 	public boolean egg_break;
@@ -22,10 +25,18 @@ public class World {
 		basket = new Basket(BASKET_START_X, BASKET_START_Y);
 		eggs = new ArrayList<Egg>();
 		splats = new ArrayList<Splat>();
+		clouds = new ArrayList<Cloud>();
 		random = new Random();
+		initClouds();
 		x_coord = y_coord = egg_type = egg_index = 0;
 		timePassed = 1;
 		egg_break = false;
+	}
+	
+	public void initClouds() {
+		for (int i = 0; i < 3; i++) {
+			clouds.add(new Cloud(i));
+		}
 	}
 	
 	public void checkPlaceEgg(float time) {
@@ -33,7 +44,7 @@ public class World {
 		
 		if ((int)timePassed % 2 == 0) {
 			x_coord = random.nextInt(275) + EGG_Y_OFFSET/2;
-			egg_type = random.nextInt(4);
+			egg_type = random.nextInt(3);
 			eggs.add(new Egg(x_coord, EGG_Y_OFFSET, egg_type));
 			timePassed = 1;
 		}
@@ -69,8 +80,21 @@ public class World {
 	}
 	
 	public void updateEggs(float time) {
-		for(Egg e: eggs) {
-			e.y += 2;
+		for(Egg egg: eggs) {
+			egg.y += 2;
+		}
+	}
+	
+	public void updateClouds(float time) {
+		for(Cloud cloud: clouds) {
+			switch(cloud.type) {
+			case 0: cloud.x += time*5;
+					break;
+			case 1: cloud.x -= time*10;
+					break;
+			case 2: cloud.x += time*20;
+					break;
+			}
 		}
 	}
 	
