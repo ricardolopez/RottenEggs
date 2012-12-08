@@ -9,6 +9,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
@@ -98,13 +99,20 @@ public class AndroidGraphics implements Graphics {
         paint.setColor(color);
         canvas.drawLine(x, y, x2, y2, paint);
     }
-
+    
+    public void drawText(String text, int x, int y, int size, int color) {
+    	
+    	paint.setColor(color);
+    	paint.setAntiAlias(true);
+    	paint.setTextSize(size);
+    	canvas.drawText(text, x, y, paint);
+    }
     
     public void drawRect(int x, int y, int width, int height, int color) {
     	
         paint.setColor(color);
         paint.setStyle(Style.FILL);
-        canvas.drawRect(x, y, x + width - 1, y + width - 1, paint);
+        canvas.drawRect(x, y, x + width, y + height, paint);
     }
 
     

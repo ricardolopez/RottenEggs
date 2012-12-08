@@ -9,7 +9,7 @@ import com.badlogic.androidgames.framework.Screen;
 public class GameScreen extends Screen {
 	
 	enum GameState {
-		Ready, Running, Paused, GameOver
+		Ready, Running, Paused, GameOver, Win, Lose
 	}
 	
 	public GameState state;
@@ -61,9 +61,18 @@ public class GameScreen extends Screen {
 		
 		world.checkPlaceEgg(time);
 		world.checkSplats();
+		world.checkCatchEgg();
 		world.updateBasket(basket_x);
 		world.updateEggs(time);
 		world.updateClouds(time);
+		if (world.checkWin()) {
+			state = GameState.Win;
+			render.renderWin();
+		}
+		if (world.checkLose()) {
+			state = GameState.Lose;
+			render.renderLose();
+		}
 	}
 	
 	@Override
@@ -71,18 +80,28 @@ public class GameScreen extends Screen {
 		render.renderSplash();
 		
 		if (state == GameState.Running)drawRunningUI();
+		if (state == GameState.Win)drawWinUI();
+		if (state == GameState.Lose)drawLoseUI();
 	}
 	
 	public void drawRunningUI() {
 		render.renderWorld(world);
 	}
 	
+	public void drawWinUI() {
+		render.renderWin();
+	}
+	
+	public void drawLoseUI() {
+		render.renderLose();
+	}
+	
 	private boolean touchBasket(int x, int y) {
 		
-		if (x > world.basket.x && 
+		if (x > world.basket.x-40 && 
 			y > world.basket.y && 
-		    x < (world.basket.width + world.basket.x) && 
-		    y < (world.basket.height + world.basket.y)) {
+		    x < (world.basket.width + world.basket.x + 40) && 
+		    y < (world.basket.height + world.basket.y + 40)) {
 			drag_basket = true;
 		} else {
 			drag_basket = false;
