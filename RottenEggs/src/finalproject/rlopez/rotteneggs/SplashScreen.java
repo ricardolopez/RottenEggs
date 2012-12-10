@@ -29,6 +29,11 @@ public class SplashScreen extends Screen {
 		Assets.green_splat = g.newPixmap("green_splat.png", PixmapFormat.ARGB4444);
 		Assets.red_egg = g.newPixmap("red_egg.png", PixmapFormat.ARGB4444);
 		Assets.red_splat = g.newPixmap("red_splat.png", PixmapFormat.ARGB4444);
+		Assets.main_menu = g.newPixmap("main_menu.png", PixmapFormat.RGB565);
+		Assets.play = g.newPixmap("play.png", PixmapFormat.ARGB4444);
+		Assets.controls = g.newPixmap("controls.png", PixmapFormat.ARGB4444);
+		Assets.continue_img = g.newPixmap("tap.png", PixmapFormat.ARGB4444);
+		Assets.controls_screen = g.newPixmap("controls_screen.png", PixmapFormat.RGB565);
 		game.setScreen(new MainMenuScreen(game));
 	}
 	

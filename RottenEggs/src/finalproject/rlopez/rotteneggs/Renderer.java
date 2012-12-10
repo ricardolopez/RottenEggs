@@ -20,6 +20,17 @@ public class Renderer {
 		g.drawPixmap(Assets.sp, 0, 0);
 	}
 	
+	public void renderMain() {
+		g.drawPixmap(Assets.main_menu, 0, 0);
+		g.drawPixmap(Assets.play, 97, 182);
+		g.drawPixmap(Assets.controls, 97, 250);
+	}
+	
+	public void renderControls() {
+		g.drawPixmap(Assets.controls_screen, 0, 0);
+		g.drawPixmap(Assets.continue_img, 100, 420);
+	}
+	
 	public void renderWorld(World world) {
 		g.drawPixmap(Assets.gs, 0, 0);
 		g.drawPixmap(Assets.basket, world.basket.x, world.basket.y);
@@ -92,15 +103,22 @@ public class Renderer {
 		g.drawText(Integer.toString(world.target), 20, 30, 25, Color.BLACK);
 	}
 	
-	public void renderWin() {
-		g.drawRect(0, 0, 320, 480, Color.BLACK);
-		g.drawText("'YOU WIN!'", 80, 220, 30, Color.WHITE);
+	public void renderWinLose(World world, boolean end) {
+		g.drawPixmap(Assets.gs, 0, 0);
+		g.drawPixmap(Assets.basket, world.basket.x, world.basket.y);
+		
+		renderClouds(world);
+		renderEggs(world);
+		renderSplats(world);
+		renderScore(world);
+		renderTarget(world);
+		if(end) {
+			g.drawText("'YOU WIN!'", 80, 220, 30, Color.BLACK);	
+		} else {
+			g.drawText("'YOU LOSE!'", 78, 220, 30, Color.BLACK);
+		}
+		
+		g.drawPixmap(Assets.continue_img, 100, 420);
+		
 	}
-	
-	public void renderLose() {
-		g.drawRect(0, 0, 320, 480, Color.BLACK);
-		g.drawText("'YOU LOSE!'", 78, 220, 30, Color.WHITE);
-	}
-	
-	
 }

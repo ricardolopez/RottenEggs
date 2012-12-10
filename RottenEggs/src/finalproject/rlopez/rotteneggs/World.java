@@ -27,9 +27,9 @@ public class World {
 		clouds = new ArrayList<Cloud>();
 		random = new Random();
 		initClouds();
-		x_coord = y_coord = egg_type = egg_index = catch_index = 0;
+		x_coord = y_coord = egg_type = egg_index = catch_index = score = 0;
 		timePassed = 1;
-		target = 120;
+		target = random.nextInt(100) + 100;
 		egg_break = false;
 		caught_egg = false;
 		change_egg = false;
@@ -95,7 +95,7 @@ public class World {
 			setNewEggTypes();
 		}
 		for(Egg egg: eggs) {
-			egg.y += 6;
+			egg.y += 4;
 		}
 	}
 	
@@ -183,5 +183,20 @@ public class World {
 	
 	public void updateBasket(int x) {
 		basket.x = x;
+	}
+	
+	public void resetWorld() {
+		basket = new Basket(BASKET_START_X, BASKET_START_Y);
+		eggs = new ArrayList<Egg>();
+		splats = new ArrayList<Splat>();
+		clouds = new ArrayList<Cloud>();
+		random = new Random();
+		initClouds();
+		x_coord = y_coord = egg_type = egg_index = catch_index = score = 0;
+		timePassed = 1;
+		target = random.nextInt(100) + 100;
+		egg_break = false;
+		caught_egg = false;
+		change_egg = false;
 	}
 }

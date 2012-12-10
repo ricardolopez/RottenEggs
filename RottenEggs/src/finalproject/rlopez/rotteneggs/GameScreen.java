@@ -9,7 +9,7 @@ import com.badlogic.androidgames.framework.Screen;
 public class GameScreen extends Screen {
 	
 	enum GameState {
-		Ready, Running, Paused, GameOver, Win, Lose
+		Main, Controls, Running, GameOver, Win, Lose
 	}
 	
 	public GameState state;
@@ -22,7 +22,7 @@ public class GameScreen extends Screen {
 		super(game);
 		drag_basket = false;
 		world = new World();
-		state = GameState.Ready;
+		state = GameState.Main;
 		render = new Renderer(game.getGraphics());
 	}
 	
@@ -31,13 +31,56 @@ public class GameScreen extends Screen {
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		game.getInput().getKeyEvents();
 		
-		if (state == GameState.Ready) updateReady(touchEvents);
+		if (state == GameState.Main) updateMain(touchEvents); 
+		if (state == GameState.Controls) updateControls(touchEvents);
 		if (state == GameState.Running) updateRunning(touchEvents, time);
+		if (state == GameState.Win) drawWinLoseUI(touchEvents);
+		if (state == GameState.Lose) drawWinLoseUI(touchEvents);
 	}
 	
-	private void updateReady(List<TouchEvent> touchEvents) {
-		if (touchEvents.size() > 0) {
-			state = GameState.Running;
+	private void updateMain(List<TouchEvent> touchEvents) {
+		render.renderMain();
+		for (int i = 0; i < touchEvents.size(); i++) {
+			TouchEvent event = touchEvents.get(i);
+			
+			if (event.type == TouchEvent.TOUCH_DOWN) {
+				if(touchPlay(event.x, event.y)) {
+					state = GameState.Running;
+				}
+				if(touchControls(event.x, event.y)) {
+					touchEvents.removeAll(touchEvents);
+					state = GameState.Controls;
+				}
+			}
+		}
+	}
+	
+	private void updateControls(List<TouchEvent> touchEvents) {
+		render.renderControls();
+		for (int i = 0; i < touchEvents.size(); i++) {
+			TouchEvent event = touchEvents.get(i);
+			
+			if (event.type == TouchEvent.TOUCH_DOWN) {
+				state = GameState.Main;
+			}
+		}
+	}
+	
+	private boolean touchPlay(int x, int y) {
+		if (x >= 97 && x <= 223 &&
+		    y >= 182 && y <= 224) {
+		    return true;
+		} else {
+		    return false;
+		}
+	}
+	
+	private boolean touchControls(int x, int y) {
+		if (x >= 97 && x <= 223 &&
+		    y >= 250 && y <= 292) {
+		    return true;
+		} else {
+		    return false;
 		}
 	}
 	
@@ -67,33 +110,38 @@ public class GameScreen extends Screen {
 		world.updateClouds(time);
 		if (world.checkWin()) {
 			state = GameState.Win;
-			render.renderWin();
+			render.renderWinLose(world, true);
 		}
 		if (world.checkLose()) {
 			state = GameState.Lose;
-			render.renderLose();
+			render.renderWinLose(world, false);
 		}
 	}
 	
 	@Override
 	public void present(float time) {
-		render.renderSplash();
-		
-		if (state == GameState.Running)drawRunningUI();
-		if (state == GameState.Win)drawWinUI();
-		if (state == GameState.Lose)drawLoseUI();
+		if (state == GameState.Running) drawRunningUI();
 	}
 	
 	public void drawRunningUI() {
 		render.renderWorld(world);
 	}
 	
-	public void drawWinUI() {
-		render.renderWin();
-	}
-	
-	public void drawLoseUI() {
-		render.renderLose();
+	public void drawWinLoseUI(List<TouchEvent> touchEvents) {
+		if (state == GameState.Win){
+			render.renderWinLose(world, true);
+		} else {
+			render.renderWinLose(world, false);
+		}
+		
+		for (int i = 0; i < touchEvents.size(); i++) {
+			TouchEvent event = touchEvents.get(i);
+			
+			if (event.type == TouchEvent.TOUCH_DOWN) {
+				world.resetWorld();
+				state = GameState.Main;
+			}
+		}
 	}
 	
 	private boolean touchBasket(int x, int y) {

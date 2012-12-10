@@ -18,5 +18,10 @@ public class Assets {
 	public static Pixmap blue_splat;
 	public static Pixmap green_splat;
 	public static Pixmap red_splat;
+	public static Pixmap main_menu;
+	public static Pixmap play;
+	public static Pixmap controls;
+	public static Pixmap controls_screen;
+	public static Pixmap continue_img;
 	
 }
